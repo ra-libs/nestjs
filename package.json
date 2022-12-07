@@ -1,7 +1,7 @@
 {
-  "name": "ra-nestjs",
+  "name": "@ra-libs/nestjs",
   "version": "1.0.0",
-  "description": "React admin nestjs",
+  "description": "React admin nestjs lib",
   "author": "Rabah Zeineddine",
   "license": "MIT",
   "readmeFilename": "README.md",
