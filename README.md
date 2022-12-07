@@ -11,7 +11,7 @@
     <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
   </p>
 
-![Workflow status](https://github.com/ra-libs/nestjs/actions/workflows/main.yml/badge.svg)
+![Workflow status](https://github.com/ra-libs/nestjs/actions/workflows/semantic-release.yml/badge.svg)
 
 This Package uses [semantic-release](https://github.com/semantic-release/semantic-release) to publish new versions. Check [Angular Commit Message Conventions](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#-commit-message-format) for new commits
 
@@ -59,17 +59,68 @@ export class CatsController {}
 > Check nestjs interceptor binding [documentation](https://docs.nestjs.com/interceptors#binding-interceptors)
 
 
+## Utils
+
+### transformInputsToPrisma
+
+Transform relation input data to handle it in prisma syntax using connect, disconnect methods
+
+```ts
+
+  private relations: string[] = ["clients"]
+
+  async update(id: string, newSale: UpdateSaleDto) {
+    const sale = await this.findOne(id)
+    const updateData = transformInputsToPrisma(sale, newSale, this.relations) as any
+    return this.prisma.sale.update({
+      where: { id },
+      data: updateData,
+    });
+  }
+```
+
+### includeReferencesIDs
+
+Include references IDs
+
+```ts
+  import { includeReferencesIDs, transformOutputArraysToIds } from '@ra-libs/nestjs'
+
+  findOne(id: string): Promise<Client> {
+    return this.prisma.client
+      .findUnique({
+        where: { id },
+        include: includeReferencesIDs(["addresses", "passports", "sales", "documents"])
+      })
+      .then(transformOutputArraysToIds);
+```
+
+### transformOutputArraysToIds
+
+Transform prisma outputs relations to IDs of string
+
+```ts
+  import { includeReferencesIDs, transformOutputArraysToIds } from '@ra-libs/nestjs'
+
+  findOne(id: string): Promise<Seller> {
+    return this.prisma.seller.findUnique({
+      where: { id },
+      include: includeReferencesIDs(["sales"])
+    }).then(transformOutputArraysToIds)
+  }
+```
+
 ## Change Log
 
-See [Changelog](CHANGELOG.md) for more information.
+See [Changelog](https://github.com/ra-libs/nestjs/blob/main/CHANGELOG.md) for more information.
 
 ## Contributing
 
-Contributions welcome! See [Contributing](CONTRIBUTING.md).
+Contributions welcome! See [Contributing](https://github.com/ra-libs/nestjs/blob/main/CONTRIBUTING.md).
 
 ## Author
 
-@RabahZeineddine
+[@RabahZeineddine](https://github.com/RabahZeineddine)
 
 ## License
 
