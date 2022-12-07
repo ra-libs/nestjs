@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/ra-libs/nestjs/compare/v1.0.1...v1.1.0) (2022-12-07)
+
+
+### Features
+
+* **utils:** add prisma helper methods ([605b2b9](https://github.com/ra-libs/nestjs/commit/605b2b91e67d365d5db4bd071cbcc1660e050015))
+
 ## [1.0.1](https://github.com/ra-libs/nestjs/compare/v1.0.0...v1.0.1) (2022-12-07)
 
 
