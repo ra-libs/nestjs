@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/ra-libs/nestjs/compare/v1.0.0...v1.0.1) (2022-12-07)
+
+
+### Bug Fixes
+
+* package organization ([4a34c0f](https://github.com/ra-libs/nestjs/commit/4a34c0fda15d844b87998856afa324d888f21af4))
+
 # 1.0.0 (2022-12-07)
 
 
