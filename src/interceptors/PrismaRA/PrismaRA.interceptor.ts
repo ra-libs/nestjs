@@ -18,16 +18,16 @@ import {
 import {
   ContentRangeOptions,
   Data,
-  ReactAdminOptions,
+  PrismaRAOptions,
 } from './PrismaRA.interfaces';
 
 export class PrismaRAInterceptor implements NestInterceptor {
-  private readonly options: ReactAdminOptions = {};
+  private readonly options: PrismaRAOptions = {};
 
   private logger: Logger;
 
   constructor(
-    options: ReactAdminOptions = {
+    options: PrismaRAOptions = {
       pageName: 'page',
       perPageName: 'perPage',
       headerIdentifier: 'react-admin-agent',
