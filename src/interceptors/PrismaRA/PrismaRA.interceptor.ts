@@ -90,8 +90,8 @@ export class PrismaRAInterceptor implements NestInterceptor {
     try {
       const {
         filter: requestFilter,
-        sort: requestSort = '{}',
-        range: requestRange = '{}',
+        sort: requestSort = '[]',
+        range: requestRange = '[]',
       } = request.query as any;
 
       const filter = JSON.parse(requestFilter);
