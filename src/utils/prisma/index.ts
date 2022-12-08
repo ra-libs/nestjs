@@ -1,6 +1,40 @@
 import * as lodash from 'lodash';
 import { validate as uuidValidate } from 'uuid';
 
+export function withTextSearch(query: any = {}, fields: Array<string> = []) {
+  const { where = {} } = query;
+  const { OR = [] } = where;
+
+  const [newOR, qValue] = OR.reduce(
+    (acc, value: any) => {
+      const { q } = value;
+      if (!q) return [[...acc[0], value], acc[1]];
+      const { contains = undefined } = q;
+      if (contains) return [acc[0], contains];
+      return acc;
+    },
+    [[], ''],
+  );
+
+  return !qValue
+    ? query
+    : {
+        ...query,
+        where: {
+          ...where,
+          OR: [
+            ...newOR,
+            ...fields.map((field: string) => ({
+              [field]: {
+                contains: qValue,
+                mode: 'insensitive',
+              },
+            })),
+          ],
+        },
+      };
+}
+
 export function transformInputsToPrisma(
   oldData: object,
   newData: object,

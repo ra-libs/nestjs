@@ -12,6 +12,10 @@ import { ParsedQs } from 'qs';
 import { map, Observable } from 'rxjs';
 
 import {
+  transformFindAllOutputArraysToIds,
+  transformOutputArraysToIds,
+} from '../../utils';
+import {
   ContentRangeOptions,
   Data,
   ReactAdminOptions,
@@ -70,10 +74,10 @@ export class PrismaRAInterceptor implements NestInterceptor {
                 resource: resource,
               }),
             );
-            return data[0];
+            return transformFindAllOutputArraysToIds(data)[0];
           }
 
-          return data;
+          return transformOutputArraysToIds(data);
         }),
       );
     }
@@ -86,8 +90,8 @@ export class PrismaRAInterceptor implements NestInterceptor {
     try {
       const {
         filter: requestFilter,
-        sort: requestSort,
-        range: requestRange,
+        sort: requestSort = '{}',
+        range: requestRange = '{}',
       } = request.query as any;
 
       const filter = JSON.parse(requestFilter);
@@ -96,7 +100,6 @@ export class PrismaRAInterceptor implements NestInterceptor {
 
       if (Object.keys(filter).length > 0) {
         const where: any = { AND: [], OR: [] };
-        if (filter.q) delete filter.q;
 
         const arrayFilter = Object.keys(filter).reduce((acc, key) => {
           const synthesizedKey = this.synthesizeKey(key);
@@ -114,11 +117,7 @@ export class PrismaRAInterceptor implements NestInterceptor {
             arrayFilter[key].forEach((value) => {
               where[conjunctionOperator].push({
                 [synthesizedKey]: {
-                  some: {
-                    id: {
-                      contains: value,
-                    },
-                  },
+                  in: value,
                 },
               });
             });
