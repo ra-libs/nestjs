@@ -89,7 +89,7 @@ export class PrismaRAInterceptor implements NestInterceptor {
 
     try {
       const {
-        filter: requestFilter,
+        filter: requestFilter = '{}',
         sort: requestSort = '[]',
         range: requestRange = '[]',
       } = request.query as any;
@@ -208,6 +208,9 @@ export class PrismaRAInterceptor implements NestInterceptor {
       const operator = comparisonMatch[1];
       return { [operator]: value };
     }
+
+    if (typeof value === 'boolean') return value;
+
     return {
       contains: value,
       mode: 'insensitive',
