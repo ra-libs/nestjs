@@ -1,4 +1,4 @@
-export interface ReactAdminOptions {
+export interface PrismaRAOptions {
   pageName?: string;
   perPageName?: string;
   headerIdentifier?: string;

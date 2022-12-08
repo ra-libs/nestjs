@@ -12,18 +12,22 @@ import { ParsedQs } from 'qs';
 import { map, Observable } from 'rxjs';
 
 import {
+  transformFindAllOutputArraysToIds,
+  transformOutputArraysToIds,
+} from '../../utils';
+import {
   ContentRangeOptions,
   Data,
-  ReactAdminOptions,
+  PrismaRAOptions,
 } from './PrismaRA.interfaces';
 
 export class PrismaRAInterceptor implements NestInterceptor {
-  private readonly options: ReactAdminOptions = {};
+  private readonly options: PrismaRAOptions = {};
 
   private logger: Logger;
 
   constructor(
-    options: ReactAdminOptions = {
+    options: PrismaRAOptions = {
       pageName: 'page',
       perPageName: 'perPage',
       headerIdentifier: 'react-admin-agent',
@@ -70,10 +74,10 @@ export class PrismaRAInterceptor implements NestInterceptor {
                 resource: resource,
               }),
             );
-            return data[0];
+            return transformFindAllOutputArraysToIds(data)[0];
           }
 
-          return data;
+          return transformOutputArraysToIds(data);
         }),
       );
     }
@@ -85,9 +89,9 @@ export class PrismaRAInterceptor implements NestInterceptor {
 
     try {
       const {
-        filter: requestFilter,
-        sort: requestSort,
-        range: requestRange,
+        filter: requestFilter = '{}',
+        sort: requestSort = '[]',
+        range: requestRange = '[]',
       } = request.query as any;
 
       const filter = JSON.parse(requestFilter);
@@ -96,7 +100,6 @@ export class PrismaRAInterceptor implements NestInterceptor {
 
       if (Object.keys(filter).length > 0) {
         const where: any = { AND: [], OR: [] };
-        if (filter.q) delete filter.q;
 
         const arrayFilter = Object.keys(filter).reduce((acc, key) => {
           const synthesizedKey = this.synthesizeKey(key);
@@ -114,11 +117,7 @@ export class PrismaRAInterceptor implements NestInterceptor {
             arrayFilter[key].forEach((value) => {
               where[conjunctionOperator].push({
                 [synthesizedKey]: {
-                  some: {
-                    id: {
-                      contains: value,
-                    },
-                  },
+                  in: value,
                 },
               });
             });
@@ -209,6 +208,9 @@ export class PrismaRAInterceptor implements NestInterceptor {
       const operator = comparisonMatch[1];
       return { [operator]: value };
     }
+
+    if (typeof value === 'boolean') return value;
+
     return {
       contains: value,
       mode: 'insensitive',
