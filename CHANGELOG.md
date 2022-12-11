@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/ra-libs/nestjs/compare/v1.2.0...v1.3.0) (2022-12-11)
+
+
+### Features
+
+* **withFilterField:** new Hook for easy filtering ([db14090](https://github.com/ra-libs/nestjs/commit/db14090cabdb35856e91b9e3d9b98ad12e896ffa))
+
 # [1.2.0](https://github.com/ra-libs/nestjs/compare/v1.1.0...v1.2.0) (2022-12-08)
 
 
