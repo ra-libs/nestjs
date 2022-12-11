@@ -7,13 +7,14 @@ import {
 } from '@nestjs/common';
 import { format as contentRangeFormat } from 'content-range';
 import { Request, Response } from 'express';
-import { DateTime } from 'luxon';
+import { flatten } from 'flat';
 import { ParsedQs } from 'qs';
 import { map, Observable } from 'rxjs';
 
 import {
   transformFindAllOutputArraysToIds,
   transformOutputArraysToIds,
+  withFilterField,
 } from '../../utils';
 import {
   ContentRangeOptions,
@@ -94,45 +95,19 @@ export class PrismaRAInterceptor implements NestInterceptor {
         range: requestRange = '[]',
       } = request.query as any;
 
-      const filter = JSON.parse(requestFilter);
+      const filter = flatten(JSON.parse(requestFilter), { safe: true });
       const sort = JSON.parse(requestSort);
       const range = JSON.parse(requestRange);
 
       if (Object.keys(filter).length > 0) {
         const where: any = { AND: [], OR: [] };
 
-        const arrayFilter = Object.keys(filter).reduce((acc, key) => {
-          const synthesizedKey = this.synthesizeKey(key);
-          if (Array.isArray(filter[key]) && synthesizedKey == key) {
-            acc[key] = filter[key];
-            delete filter[key];
-          }
-          return acc;
-        }, {});
-
-        if (Object.keys(arrayFilter).length > 0) {
-          Object.keys(arrayFilter).forEach((key) => {
-            const synthesizedKey = this.synthesizeKey(key);
-            const conjunctionOperator = this.getConjunctionOperator(key);
-            arrayFilter[key].forEach((value) => {
-              where[conjunctionOperator].push({
-                [synthesizedKey]: {
-                  in: value,
-                },
-              });
-            });
-          });
-        }
-
         if (Object.keys(filter).length > 0) {
           Object.keys(filter).forEach((key) => {
-            const synthesizedKey = this.synthesizeKey(key);
-            const conjunctionOperator = this.getConjunctionOperator(key);
-            where[conjunctionOperator].push({
-              [synthesizedKey]: this.getFilterValue(key, filter[key]),
-            });
+            withFilterField({ where }, key, filter[key]);
           });
         }
+
         if (where.AND.length == 0) delete where.AND;
         if (where.OR.length == 0) delete where.OR;
         parsedQuery['where'] = where;
@@ -186,40 +161,5 @@ export class PrismaRAInterceptor implements NestInterceptor {
       size: options.count,
       unit: options.resource,
     });
-  }
-
-  private synthesizeKey(key: string): string {
-    return key.split('__')[0];
-  }
-
-  private getConjunctionOperator(key: string): string {
-    const conjunctionRegex = new RegExp(/__((OR)|(AND))/, 'g');
-    const conjunctionMatch = conjunctionRegex.exec(key);
-    if (conjunctionMatch && conjunctionMatch?.[1]) return conjunctionMatch[1];
-    return 'OR';
-  }
-
-  private getFilterValue(key: string, value: any) {
-    value = this.parseFilterValue(value);
-
-    const comparisonRegex = new RegExp(/__(((g|l)te?)|(not)|(in))/, 'g');
-    const comparisonMatch = comparisonRegex.exec(key);
-    if (comparisonMatch && comparisonMatch?.[1]) {
-      const operator = comparisonMatch[1];
-      return { [operator]: value };
-    }
-
-    if (typeof value === 'boolean') return value;
-
-    return {
-      contains: value,
-      mode: 'insensitive',
-    };
-  }
-
-  private parseFilterValue(value: any) {
-    if (DateTime.fromISO(value).isValid)
-      return DateTime.fromISO(value).toString();
-    return value;
   }
 }

@@ -1,4 +1,6 @@
+import { unflatten } from 'flat';
 import * as lodash from 'lodash';
+import { DateTime } from 'luxon';
 import { validate as uuidValidate } from 'uuid';
 
 export function withTextSearch(query: any = {}, fields: Array<string> = []) {
@@ -64,27 +66,6 @@ export function transformInputsToPrisma(
   return data;
 }
 
-export function transformInputsToConnect(data: object): any {
-  const keys = Object.keys(data);
-  for (const key of keys) {
-    if (
-      Array.isArray(data[key]) &&
-      data[key].every((item) => typeof item == 'string' && uuidValidate(item))
-    ) {
-      data[key] = {
-        connect: data[key].map((id) => ({ id })),
-      };
-    } else if (key.endsWith('Id') && key.length > 2) {
-      const id = data[key];
-      delete data[key];
-      data[key.substring(0, key.length - 2)] = {
-        connect: { id },
-      };
-    }
-  }
-  return data;
-}
-
 export function transformOutputArraysToIds<T = any>(data: T): T {
   if (!data || data.constructor !== {}.constructor) return data;
   const keys = Object.keys(data);
@@ -120,4 +101,63 @@ export function includeReferencesIDs(references: string[]) {
     };
     return acc;
   }, {});
+}
+
+export function getFilterValue(key: string, value: any) {
+  const synthesizedKey = synthesizeKey(key);
+
+  value = parseFilterValue(value);
+
+  const comparisonRegex = new RegExp(/__(((g|l)te?)|(not)|(in))/, 'g');
+  const comparisonMatch = comparisonRegex.exec(key);
+  if (comparisonMatch && comparisonMatch?.[1]) {
+    const operator = comparisonMatch[1];
+    return { [operator]: value };
+  }
+
+  if (typeof value === 'boolean') return value;
+
+  if (Array.isArray(value) && synthesizedKey == key)
+    return {
+      in: value,
+    };
+
+  return {
+    contains: value,
+    mode: 'insensitive',
+  };
+}
+
+export function withFilterField(query: any, key: string, value: any) {
+  const conjunctionOperator = getConjunctionOperator(key);
+
+  if (!query.where) query.where = {};
+  if (!query.where?.[conjunctionOperator])
+    query.where[conjunctionOperator] = [];
+
+  const synthesizedKey = synthesizeKey(key);
+
+  query.where[conjunctionOperator].push(
+    unflatten({
+      [synthesizedKey]: getFilterValue(key, value),
+    }),
+  );
+  return query;
+}
+
+export function synthesizeKey(key: string): string {
+  return key.split('__')[0];
+}
+
+export function getConjunctionOperator(key: string): string {
+  const conjunctionRegex = new RegExp(/__((OR)|(AND))/, 'g');
+  const conjunctionMatch = conjunctionRegex.exec(key);
+  if (conjunctionMatch && conjunctionMatch?.[1]) return conjunctionMatch[1];
+  return 'OR';
+}
+
+export function parseFilterValue(value: any) {
+  if (DateTime.fromISO(value).isValid)
+    return DateTime.fromISO(value).toString();
+  return value;
 }
