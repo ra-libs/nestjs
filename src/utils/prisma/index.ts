@@ -117,7 +117,7 @@ export function getFilterValue(key: string, value: any) {
 
   if (typeof value === 'boolean') return value;
 
-  if (Array.isArray(value) && synthesizedKey == key)
+  if (Array.isArray(value))
     return {
       in: value,
     };
