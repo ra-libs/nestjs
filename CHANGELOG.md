@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/ra-libs/nestjs/compare/v1.3.0...v1.3.1) (2022-12-12)
+
+
+### Bug Fixes
+
+* **getFilterValue:** remove conditional breaking filters ([b978d8f](https://github.com/ra-libs/nestjs/commit/b978d8fa6be2221c6c2c8030bb1c41fd26759244))
+
 # [1.3.0](https://github.com/ra-libs/nestjs/compare/v1.2.0...v1.3.0) (2022-12-11)
 
 
