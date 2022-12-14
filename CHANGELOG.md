@@ -1,3 +1,11 @@
+## [1.3.2](https://github.com/ra-libs/nestjs/compare/v1.3.1...v1.3.2) (2022-12-14)
+
+
+### Bug Fixes
+
+* **docs:** update readme ([5d1618e](https://github.com/ra-libs/nestjs/commit/5d1618e03d9ba67a0548750887c0df86924e1164))
+* remove unused vars ([993838f](https://github.com/ra-libs/nestjs/commit/993838f1d10efe7f666e724e8216e0233b7b08df))
+
 ## [1.3.1](https://github.com/ra-libs/nestjs/compare/v1.3.0...v1.3.1) (2022-12-12)
 
 
