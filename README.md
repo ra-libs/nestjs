@@ -50,7 +50,7 @@ bootstrap();
 #### Per controller usage
 
 ```ts
-import { PrismaRAInterceptor } from '@ra-libs/nestjs'rom '@tech/olist-commons';
+import { PrismaRAInterceptor } from '@ra-libs/nestjs';
 
 @UseInterceptors(PrismaRAInterceptor)
 export class CatsController {}
