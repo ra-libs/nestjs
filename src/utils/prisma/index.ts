@@ -21,20 +21,20 @@ export function withTextSearch(query: any = {}, fields: Array<string> = []) {
   return !qValue
     ? query
     : {
-        ...query,
-        where: {
-          ...where,
-          OR: [
-            ...newOR,
-            ...fields.map((field: string) => ({
-              [field]: {
-                contains: qValue,
-                mode: 'insensitive',
-              },
-            })),
-          ],
-        },
-      };
+      ...query,
+      where: {
+        ...where,
+        OR: [
+          ...newOR,
+          ...fields.map((field: string) => ({
+            [field]: {
+              contains: qValue,
+              mode: 'insensitive',
+            },
+          })),
+        ],
+      },
+    };
 }
 
 export function transformInputsToPrisma(
@@ -104,8 +104,6 @@ export function includeReferencesIDs(references: string[]) {
 }
 
 export function getFilterValue(key: string, value: any) {
-  const synthesizedKey = synthesizeKey(key);
-
   value = parseFilterValue(value);
 
   const comparisonRegex = new RegExp(/__(((g|l)te?)|(not)|(in))/, 'g');
