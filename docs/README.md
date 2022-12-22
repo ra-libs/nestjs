@@ -13,8 +13,6 @@
   </p>
 
 
-This Package uses [semantic-release](https://github.com/semantic-release/semantic-release) to publish new versions. Check [Angular Commit Message Conventions](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#-commit-message-format) for new commits
-
 ### Installation
 
 Run npm install
@@ -22,25 +20,3 @@ Run npm install
 ```bash
 npm install @ra-libs/nestjs
 ```
-
-
-### Documentation
-
-check the [documentation page](https://ra-libs.gitbook.io/nestjs)
-
-
-## Change Log
-
-See [Changelog](https://github.com/ra-libs/nestjs/blob/main/CHANGELOG.md) for more information.
-
-## Contributing
-
-Contributions welcome! See [Contributing](https://github.com/ra-libs/nestjs/blob/main/CONTRIBUTING.md).
-
-## Author
-
-[@RabahZeineddine](https://github.com/RabahZeineddine)
-
-## License
-
-Licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
