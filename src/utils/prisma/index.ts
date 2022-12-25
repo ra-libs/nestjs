@@ -49,17 +49,17 @@ export function transformInputsToPrisma(
   oldData: object = {},
   relations: string[] = [],
 ): any {
-  const data = transformOutputArraysToIds({ ...newData })
-  const cloneOldData = transformOutputArraysToIds({ ...oldData })
+  const data = transformOutputArraysToIds({ ...newData });
+  const cloneOldData = transformOutputArraysToIds({ ...oldData });
   const keys = Object.keys(data);
 
   for (const key of keys) {
     if (
       (relations.includes(key) && Array.isArray(data[key])) ||
-      (
-        Array.isArray(data[key]) &&
-        data[key].every((item) => typeof item == 'string' && uuidValidate(item))
-      )
+      (Array.isArray(data[key]) &&
+        data[key].every(
+          (item) => typeof item == 'string' && uuidValidate(item),
+        ))
     ) {
       const disconnect = lodash.difference(cloneOldData[key], data[key]);
       data[key] = {
