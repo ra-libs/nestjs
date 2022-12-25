@@ -3,7 +3,16 @@ import * as lodash from 'lodash';
 import { DateTime } from 'luxon';
 import { validate as uuidValidate } from 'uuid';
 
-export function withTextSearch(query: any = {}, fields: Array<string> = []) {
+/**
+ *
+ * @param query prisma query
+ * @param fields fields to be filtered by
+ * @returns prisma query
+ *
+ * @example
+ * query = withQSearch(query, ["street","client.firstName"])
+ */
+export function withQSearch(query: any = {}, fields: string[] = []) {
   const { where = {} } = query;
   const { OR = [] } = where;
 
@@ -18,39 +27,41 @@ export function withTextSearch(query: any = {}, fields: Array<string> = []) {
     [[], ''],
   );
 
-  return !qValue
-    ? query
-    : {
-      ...query,
-      where: {
-        ...where,
-        OR: [
-          ...newOR,
-          ...fields.map((field: string) => ({
-            [field]: {
-              contains: qValue,
-              mode: 'insensitive',
-            },
-          })),
-        ],
-      },
-    };
+  if (!qValue) return query;
+
+  query = {
+    ...query,
+    where: {
+      ...where,
+      OR: [...newOR],
+    },
+  };
+
+  fields.forEach((field) => {
+    query = withFilterField(query, field, qValue);
+  });
+
+  return query;
 }
 
 export function transformInputsToPrisma(
-  oldData: object,
   newData: object,
-  relations: string[],
+  oldData: object = {},
+  relations: string[] = [],
 ): any {
-  const data = { ...newData };
+  const data = transformOutputArraysToIds({ ...newData })
+  const cloneOldData = transformOutputArraysToIds({ ...oldData })
   const keys = Object.keys(data);
+
   for (const key of keys) {
     if (
-      relations.includes(key) &&
-      Array.isArray(data[key]) &&
-      data[key].every((item) => typeof item == 'string' && uuidValidate(item))
+      (relations.includes(key) && Array.isArray(data[key])) ||
+      (
+        Array.isArray(data[key]) &&
+        data[key].every((item) => typeof item == 'string' && uuidValidate(item))
+      )
     ) {
-      const disconnect = lodash.difference(oldData[key], data[key]);
+      const disconnect = lodash.difference(cloneOldData[key], data[key]);
       data[key] = {
         disconnect: disconnect.map((id) => ({ id })),
         connect: data[key].map((id) => ({ id })),
@@ -101,6 +112,49 @@ export function includeReferencesIDs(references: string[]) {
     };
     return acc;
   }, {});
+}
+
+/**
+ *
+ * @param query prisma query
+ * @param relations entity relations ex: ["client"]
+ * @returns query
+ */
+export function includeRelations(query: any, relations: string[]) {
+  const flattenKeys = relations.reduce((acc, relation) => {
+    const key = relation.split('.').join('.select.');
+    acc[key] = true;
+    return acc;
+  }, {});
+
+  return {
+    ...query,
+    include: unflatten(flattenKeys),
+  };
+}
+
+export function removeOutputRelations<T = any | any[] | [any[], number]>(
+  data: T,
+  relations: string[],
+): T {
+  let output: any = {};
+  if (!data) return data;
+  if (Array.isArray(data) && data.length == 1) output = [...data];
+  if (Array.isArray(data) && data.length == 2) output = [...data[0]];
+  else output = [{ ...data }];
+
+  output = output.reduce((acc, item) => {
+    item = Object.keys(item).reduce((innerAcc, key) => {
+      if (!relations.includes(key)) innerAcc[key] = item[key];
+      return innerAcc;
+    }, {});
+    acc.push(item);
+    return acc;
+  }, []);
+
+  if (Array.isArray(data) && data.length == 1) return output;
+  if (Array.isArray(data) && data.length == 2) return [output, data[1]] as T;
+  return output[0];
 }
 
 export function getFilterValue(key: string, value: any) {
