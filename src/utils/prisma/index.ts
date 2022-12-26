@@ -33,7 +33,7 @@ export function withQSearch(query: any = {}, fields: string[] = []) {
     ...query,
     where: {
       ...where,
-      OR: [...newOR],
+      OR: newOR,
     },
   };
 
