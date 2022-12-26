@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/ra-libs/nestjs/compare/v1.3.2...v1.4.0) (2022-12-26)
+
+
+### Features
+
+* add withQSearch,includeRelations, removeOutputRelations methods ([caf4f5d](https://github.com/ra-libs/nestjs/commit/caf4f5d8b4665bf70dd02f25d6099f9bcc792532))
+
 ## [1.3.2](https://github.com/ra-libs/nestjs/compare/v1.3.1...v1.3.2) (2022-12-14)
 
 
