@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/ra-libs/nestjs/compare/v1.4.0...v1.4.1) (2022-12-27)
+
+
+### Bug Fixes
+
+* trigger deploy ([80a77c4](https://github.com/ra-libs/nestjs/commit/80a77c470ffde09efae7b81b68c990d218e00113))
+
 # [1.4.0](https://github.com/ra-libs/nestjs/compare/v1.3.2...v1.4.0) (2022-12-27)
 
 
