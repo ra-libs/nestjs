@@ -1,3 +1,16 @@
+# [1.4.0](https://github.com/ra-libs/nestjs/compare/v1.3.2...v1.4.0) (2022-12-27)
+
+
+### Bug Fixes
+
+* linter ([f85ba6a](https://github.com/ra-libs/nestjs/commit/f85ba6af47c73e064ee3c18598b55cbfbaba2ad1))
+* **utils:** transformInputsToPrisma connect/disconnect fixes ([35df623](https://github.com/ra-libs/nestjs/commit/35df623c7acbbe7fbff18d1c50388cddd3a0fdd1))
+
+
+### Features
+
+* add withQSearch,includeRelations, removeOutputRelations methods ([caf4f5d](https://github.com/ra-libs/nestjs/commit/caf4f5d8b4665bf70dd02f25d6099f9bcc792532))
+
 # [1.4.0](https://github.com/ra-libs/nestjs/compare/v1.3.2...v1.4.0) (2022-12-26)
 
 
