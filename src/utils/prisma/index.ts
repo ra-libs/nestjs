@@ -54,7 +54,6 @@ export function transformInputsToPrisma(
   const keys = Object.keys(data);
 
   for (const key of keys) {
-
     // Identify relation keys or arrays
     if (
       (relations.includes(key) && Array.isArray(data[key])) ||
@@ -63,20 +62,20 @@ export function transformInputsToPrisma(
           (item) => typeof item == 'string' && uuidValidate(item),
         ))
     ) {
-
       // map the existed and new relations to be connected.
       const connect = data[key].map((id) => ({ id }));
 
       // Clear the relation key
-      data[key] = {}
+      data[key] = {};
 
       const disconnect = lodash.difference(cloneOldData[key], data[key]);
 
       // disconnect relation only if it needs to.
-      if (disconnect.length > 0) data[key]['disconnect'] = disconnect.map((id) => ({ id }))
+      if (disconnect.length > 0)
+        data[key]['disconnect'] = disconnect.map((id) => ({ id }));
 
       // connect relation only if it needs to.
-      if (connect.length > 0) data[key]['connect'] = connect
+      if (connect.length > 0) data[key]['connect'] = connect;
     } else if (key.endsWith('Id') && key.length > 2) {
       const id = data[key];
       delete data[key];
