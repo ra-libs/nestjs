@@ -170,7 +170,10 @@ export function removeOutputRelations<T = any | any[] | [any[], number]>(
 export function getFilterValue(key: string, value: any) {
   value = parseFilterValue(value);
 
-  const comparisonRegex = new RegExp(/__(((g|l)te?)|(not)|(in)|(hasSome)|(has))/, 'g');
+  const comparisonRegex = new RegExp(
+    /__(((g|l)te?)|(not)|(in)|(hasSome)|(has))/,
+    'g',
+  );
   const comparisonMatch = comparisonRegex.exec(key);
   if (comparisonMatch && comparisonMatch?.[1]) {
     const operator = comparisonMatch[1];
