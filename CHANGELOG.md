@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/ra-libs/nestjs/compare/v1.4.1...v1.5.0) (2023-01-14)
+
+
+### Features
+
+* add hasSome, has comparison to regex ([76c2e96](https://github.com/ra-libs/nestjs/commit/76c2e965134b36b0199edc6efef0d3df84710aa6))
+
 ## [1.4.1](https://github.com/ra-libs/nestjs/compare/v1.4.0...v1.4.1) (2022-12-27)
 
 
