@@ -1,3 +1,11 @@
+## [1.5.1](https://github.com/ra-libs/nestjs/compare/v1.5.0...v1.5.1) (2023-01-26)
+
+
+### Bug Fixes
+
+* update interceptor return type ([4c2ab85](https://github.com/ra-libs/nestjs/commit/4c2ab85103f59309ae41c9abed1b85f160b40854))
+* update interceptor return type ([62b0364](https://github.com/ra-libs/nestjs/commit/62b0364ea7ae3224db4b55fe33ab7d2396e734a8))
+
 # [1.5.0](https://github.com/ra-libs/nestjs/compare/v1.4.1...v1.5.0) (2023-01-14)
 
 
