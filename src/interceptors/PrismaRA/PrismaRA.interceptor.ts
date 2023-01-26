@@ -40,7 +40,7 @@ export class PrismaRAInterceptor implements NestInterceptor {
     this.logger = new Logger(PrismaRAInterceptor.name);
   }
 
-  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> | Promise<Observable<any>> {
     const request = context.switchToHttp().getRequest();
 
     if (request?.headers?.[this.options.headerIdentifier]) {
