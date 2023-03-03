@@ -66,9 +66,9 @@ export function transformInputsToPrisma(
       const connect = data[key].map((id) => ({ id }));
 
       // Clear the relation key
-      data[key] = {};
-
       const disconnect = lodash.difference(cloneOldData[key], data[key]);
+
+      data[key] = {};
 
       // disconnect relation only if it needs to.
       if (disconnect.length > 0)
