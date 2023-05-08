@@ -35,7 +35,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@nestjs/common": "^9.3.12",
+    "@nestjs/common": "^9.4.0",
     "@nestjs/core": "^9.3.12",
     "@nestjs/platform-express": "^9.3.12",
     "content-range": "^2.0.2",
