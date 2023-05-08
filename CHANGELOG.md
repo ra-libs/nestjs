@@ -1,3 +1,10 @@
+## [1.5.6](https://github.com/ra-libs/nestjs/compare/v1.5.5...v1.5.6) (2023-05-08)
+
+
+### Bug Fixes
+
+* **deps:** bump rimraf from 4.4.1 to 5.0.0 ([8dc8106](https://github.com/ra-libs/nestjs/commit/8dc810601e042abfecd61645bd1c3d7eb64b7a02))
+
 ## [1.5.5](https://github.com/ra-libs/nestjs/compare/v1.5.4...v1.5.5) (2023-05-08)
 
 
