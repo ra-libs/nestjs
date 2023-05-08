@@ -1,3 +1,5 @@
+## [1.5.4](https://github.com/ra-libs/nestjs/compare/v1.5.3...v1.5.4) (2023-05-08)
+
 ## [1.5.3](https://github.com/ra-libs/nestjs/compare/v1.5.2...v1.5.3) (2023-04-04)
 
 
