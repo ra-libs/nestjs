@@ -1,3 +1,10 @@
+## [1.5.7](https://github.com/ra-libs/nestjs/compare/v1.5.6...v1.5.7) (2023-05-09)
+
+
+### Bug Fixes
+
+* **deps:** bump @nestjs/core from 9.3.12 to 9.4.0 ([0e6cea6](https://github.com/ra-libs/nestjs/commit/0e6cea69188f4ec7a8dadc6b052da0f105497072))
+
 ## [1.5.6](https://github.com/ra-libs/nestjs/compare/v1.5.5...v1.5.6) (2023-05-08)
 
 
