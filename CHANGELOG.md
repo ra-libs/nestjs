@@ -1,3 +1,11 @@
+## [1.5.8](https://github.com/ra-libs/nestjs/compare/v1.5.7...v1.5.8) (2023-05-09)
+
+
+### Bug Fixes
+
+* **deps:** bump @nestjs/platform-express from 9.3.12 to 9.4.0 ([c80a831](https://github.com/ra-libs/nestjs/commit/c80a8319630dd0d7349d8902c5ca13f296eb87c4))
+* **deps:** bump rxjs from 7.8.0 to 7.8.1 ([0df82b5](https://github.com/ra-libs/nestjs/commit/0df82b5187fc9825dfd7ac63b730643d5bbc67a3))
+
 ## [1.5.7](https://github.com/ra-libs/nestjs/compare/v1.5.6...v1.5.7) (2023-05-09)
 
 
