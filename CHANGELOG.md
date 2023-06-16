@@ -1,3 +1,13 @@
+## [1.5.11](https://github.com/ra-libs/nestjs/compare/v1.5.10...v1.5.11) (2023-06-16)
+
+
+### Bug Fixes
+
+* ci release user ([30492c9](https://github.com/ra-libs/nestjs/commit/30492c9a365cefa2c8334eb25a20f4ae839b27f4))
+* commitlint ([576b4ad](https://github.com/ra-libs/nestjs/commit/576b4ad94ddd8d25132ebb50a1c0e9936ae30797))
+* update deps ([7e9afc6](https://github.com/ra-libs/nestjs/commit/7e9afc62a92afed1b7036573fac34518b0058f91))
+* update deps ([#25](https://github.com/ra-libs/nestjs/issues/25)) ([4ddfc53](https://github.com/ra-libs/nestjs/commit/4ddfc53c6461bacd744ce5f7b7aff94ce83f5b8b))
+
 ## [1.5.10](https://github.com/ra-libs/nestjs/compare/v1.5.9...v1.5.10) (2023-05-27)
 
 
