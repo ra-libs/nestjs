@@ -1,8 +1,4 @@
 module.exports = {
-  "extends": [
-    "@commitlint/config-conventional"
-  ],
-  "rules": {
-    "body-max-line-length": [1, "always", Infinity]
-  }
-}
+  extends: ['@commitlint/config-conventional'],
+  ignores: [(message) => /^chore\(release\):.+$/m.test(message)],
+};
