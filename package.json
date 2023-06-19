@@ -37,7 +37,7 @@
   "dependencies": {
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
-    "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/platform-express": "^10.0.2",
     "content-range": "^2.0.2",
     "flat": "^5.0.2",
     "lodash": "^4.17.21",
