@@ -1,0 +1,11 @@
+{
+  "upgrade": false,
+  "reject": [
+    "eslint-config-prettier",
+    "@typescript-eslint/parser",
+    "eslint-plugin-prettier",
+    "@typescript-eslint/eslint-plugin",
+    "prettier",
+    "flat"
+  ]
+}
