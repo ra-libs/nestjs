@@ -1,3 +1,10 @@
+## [1.5.12](https://github.com/ra-libs/nestjs/compare/v1.5.11...v1.5.12) (2023-10-12)
+
+
+### Bug Fixes
+
+* version sync ([5eef885](https://github.com/ra-libs/nestjs/commit/5eef885a737a78010583c708d214eb294155f23f))
+
 ## [1.5.11](https://github.com/ra-libs/nestjs/compare/v1.5.10...v1.5.11) (2023-06-16)
 
 
