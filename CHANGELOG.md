@@ -1,3 +1,10 @@
+## [1.5.20](https://github.com/ra-libs/nestjs/compare/v1.5.19...v1.5.20) (2025-10-18)
+
+
+### Bug Fixes
+
+* update deps ([eac39ed](https://github.com/ra-libs/nestjs/commit/eac39ed2c3f54223626516f2ac1543b98ad90c98))
+
 ## [1.5.19](https://github.com/ra-libs/nestjs/compare/v1.5.18...v1.5.19) (2024-07-08)
 
 
