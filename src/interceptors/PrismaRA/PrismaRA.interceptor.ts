@@ -21,6 +21,7 @@ import {
   Data,
   PrismaRAOptions,
 } from './PrismaRA.interfaces';
+import { PrismaQueryRequest } from './types';
 
 export class PrismaRAInterceptor implements NestInterceptor {
   private readonly options: PrismaRAOptions = {};
@@ -44,10 +45,10 @@ export class PrismaRAInterceptor implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler,
   ): Observable<any> | Promise<Observable<any>> {
-    const request = context.switchToHttp().getRequest();
+    const request = context.switchToHttp().getRequest<PrismaQueryRequest>();
 
     if (request?.headers?.[this.options.headerIdentifier]) {
-      request.query = this.parsePrismaFilters(request);
+      request.prismaQuery = this.parsePrismaFilters(request);
 
       return next.handle().pipe(
         map((data: Data<any>) => {
@@ -88,7 +89,7 @@ export class PrismaRAInterceptor implements NestInterceptor {
     return next.handle().pipe();
   }
 
-  private parsePrismaFilters(request: Request): ParsedQs {
+  private parsePrismaFilters(request: PrismaQueryRequest): ParsedQs {
     const parsedQuery: ParsedQs = {};
 
     try {

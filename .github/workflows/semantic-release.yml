@@ -22,9 +22,9 @@ jobs:
           git config usre.email "rabah.zeineddine@hotmail.com"
       - uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 22
       - uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
       - run: pnpm install --frozen-lockfile
       - run: npx semantic-release
